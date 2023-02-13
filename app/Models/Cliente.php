@@ -10,13 +10,18 @@ class Cliente extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nombre',
-        'imagen',
+        'nombre',        
         'cedula',
-        'correo',
+        'email',
         'telefono',
         'observaciones'
     ];
+
+    protected $nullable = [
+        'imagen'
+    ];
+
+
     
     /**
      * * Relacion uno a muchos de las observaciones respectivas a cada cliente
