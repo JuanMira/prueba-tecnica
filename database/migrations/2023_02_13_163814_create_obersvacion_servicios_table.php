@@ -13,10 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('obersvacions', function (Blueprint $table) {
+        Schema::create('obersvacion_servicios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained()->cascadeOnDelete();
-            $table->string('observacion');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('obersvacions');
+        Schema::dropIfExists('obersvacion_servicios');
     }
 };
