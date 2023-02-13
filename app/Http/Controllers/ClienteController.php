@@ -66,6 +66,11 @@ class ClienteController extends Controller
     public function show(Cliente $cliente)
     {
         //
+
+        // metodo para mostrar un solo cliente
+        return Inertia::render("Clientes/Cliente", [
+            'client' => $cliente
+        ]);
     }
 
     /**
