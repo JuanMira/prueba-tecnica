@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
  */
 
 Route::resource('cliente', ClienteController::class)
-    ->only(['index'])
+    ->only(['index','create', 'store'])
     ->middleware(['auth','verified']);
 
 require __DIR__.'/auth.php';
