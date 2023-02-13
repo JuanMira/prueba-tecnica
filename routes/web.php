@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+/**
+ * * Agregando permisos del controlador y middlewares de autenticacion
+ */
 
 Route::resource('cliente', ClienteController::class)
     ->only(['index'])
