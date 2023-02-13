@@ -16,7 +16,12 @@ class ClienteController extends Controller
     public function index()
     {
         //
-        return Inertia::render('Clientes/Index');
+        // consultar todos los datos de cliente existentes
+        $clients = Cliente::all();
+
+        return Inertia::render('Clientes/Index' ,[
+            'clients' => $clients
+        ]);
     }
 
     /**
@@ -27,6 +32,7 @@ class ClienteController extends Controller
     public function create()
     {
         //
+        return Inertia::render('Clientes/Create'); 
     }
 
     /**
@@ -38,6 +44,17 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         //
+        $validated = $request->validate([
+            'nombre' => 'required|string|min:6',
+            'cedula' => 'required|numeric|integer',
+            'email' => 'required|string|email',
+            'telefono' => 'required|numeric|integer',
+        ]);
+
+        error_log("Creating new cliente");
+
+        Cliente::create($validated);
+        return redirect(route('cliente.index'));
     }
 
     /**
