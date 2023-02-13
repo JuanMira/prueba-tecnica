@@ -18,6 +18,7 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
+        "oh-vue-icons": "^1.0.0-rc3",
         "vue-final-modal": "^4.0.3"
     }
 }
