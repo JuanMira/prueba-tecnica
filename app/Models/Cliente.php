@@ -17,6 +17,10 @@ class Cliente extends Model
         'telefono',
         'observaciones'
     ];
+    
+    /**
+     * * Relacion uno a muchos de las observaciones respectivas a cada cliente
+     */        
 
     public function observations(){
         return $this->hasMany(Obersvacion::class);
