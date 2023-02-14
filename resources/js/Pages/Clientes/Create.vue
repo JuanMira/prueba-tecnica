@@ -11,7 +11,6 @@ const form = useForm({
     telefono: "",
 });
 
-
 </script>
 <template>
     <AuthenticatedLayout>
