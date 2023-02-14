@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Servicio;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -49,9 +50,7 @@ class ClienteController extends Controller
             'cedula' => 'required|numeric|integer',
             'email' => 'required|string|email',
             'telefono' => 'required|numeric|integer',
-        ]);
-
-        error_log("Creating new cliente");
+        ]);        
 
         Cliente::create($validated);
         return redirect(route('cliente.index'));
@@ -68,8 +67,17 @@ class ClienteController extends Controller
         //
 
         // metodo para mostrar un solo cliente
+        $services = Servicio::all();
+        
+        //para obtener todos los servicios de un cliente especifico
+        $client = Cliente::with('servicios')
+            ->where('id','=', $cliente->id)
+            ->get()
+            ->first();
+
         return Inertia::render("Clientes/Cliente", [
-            'client' => $cliente
+            'client' => $client,
+            'services' => $services,
         ]);
     }
 
@@ -82,6 +90,10 @@ class ClienteController extends Controller
     public function edit(Cliente $cliente)
     {
         //
+        return Inertia::render('Clientes/Edit', [
+            'client' => $cliente
+        ]);
+     
     }
 
     /**
@@ -94,6 +106,18 @@ class ClienteController extends Controller
     public function update(Request $request, Cliente $cliente)
     {
         //
+        $validated = $request->validate([
+            'nombre' => 'required|string',
+            'email' => 'required|string|email',
+            'cedula' => 'required|numeric',
+            'telefono' => 'required|numeric'
+        ]);
+        try {
+            $cliente->update($validated);
+            return redirect(route('cliente.index'));
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -104,6 +128,8 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        //              
+        $cliente->delete();
+        return redirect(route('cliente.index'));
     }
 }
