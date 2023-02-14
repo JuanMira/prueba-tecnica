@@ -1,7 +1,13 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ClienteServicioController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ObersvacionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceClientController;
+use App\Http\Controllers\ServicioController;
+use App\Models\Obersvacion;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,14 +23,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::resource('/', HomeController::class)->only(['index']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -39,8 +38,17 @@ Route::middleware('auth')->group(function () {
  * * Agregando permisos del controlador y middlewares de autenticacion
  */
 
-Route::resource('cliente', ClienteController::class)
-    ->only(['index','create', 'store'])
-    ->middleware(['auth','verified']);
 
-require __DIR__.'/auth.php';
+Route::resource('cliente', ClienteController::class)
+    ->only(['index', 'create', 'store', 'show','edit','update', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('servicio', ServicioController::class)
+    ->only(['index', 'create', 'store','edit', 'destroy', 'update'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('serviceClient', ServiceClientController::class)
+    ->only(['store'])
+    ->middleware(['auth', 'verified']);
+
+require __DIR__ . '/auth.php';

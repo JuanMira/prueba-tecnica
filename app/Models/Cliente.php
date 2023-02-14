@@ -18,16 +18,17 @@ class Cliente extends Model
     ];
 
     protected $nullable = [
-        'imagen'
+        'imagen',
+        'observaciones'
     ];
 
 
     
     /**
-     * * Relacion uno a muchos de las observaciones respectivas a cada cliente
+     * * Relacion uno a muchos de los servicios respectivos para cada cliente
      */        
 
-    public function observations(){
-        return $this->hasMany(Obersvacion::class);
+    public function servicios(){
+        return $this->belongsToMany(Servicio::class, 'cliente_servicio');
     }
 }

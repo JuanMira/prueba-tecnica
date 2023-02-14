@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('imagen')->nullable(true);
             $table->string('cedula');
             $table->string('email');
-            $table->string('telefono');            
+            $table->string('telefono');                   
             $table->timestamps();
         });
     }

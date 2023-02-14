@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('servicios', function (Blueprint $table) {
+        //
+        Schema::create('cliente_servicio', function(Blueprint $table){
             $table->id();
-            $table->string('nombre');
-            $table->string('image')->nullable(true);            
-            $table->enum('tipo_servicio',[1,2])->default(1);
-            $table->timestamp('fecha_inicio');
-            $table->timestamp('fecha_fin');            
-            $table->string('observaciones');
+            $table->unsignedBigInteger('cliente_id');
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+
+            $table->unsignedBigInteger('servicio_id');
+            $table->foreign('servicio_id')->references('id')->on('servicios')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -32,6 +33,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servicios');
+        //
+
+        Schema::dropIfExists('cliente_servicio');
     }
 };

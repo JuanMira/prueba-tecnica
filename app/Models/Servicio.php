@@ -17,4 +17,12 @@ class Servicio extends Model
         'fecha_fin',
         'observaciones',
     ];
+
+    public static $rules = [
+        'state' => 'required|in:1,2'
+    ];
+
+    public function clientes(){
+        return $this->belongsToMany(Cliente::class, 'cliente_servicio');
+    }
 }

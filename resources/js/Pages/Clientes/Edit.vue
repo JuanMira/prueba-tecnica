@@ -1,27 +1,30 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { useForm } from "@inertiajs/vue3";
 
+const props = defineProps(["client"]);
 const form = useForm({
-    nombre: "",
-    cedula: "",
-    email: "",
-    telefono: "",
+    nombre: props.client.nombre,
+    email: props.client.email,
+    cedula: props.client.cedula,
+    telefono: props.client.telefono,
 });
-
-
 </script>
+
 <template>
     <AuthenticatedLayout>
         <div class="mx-auto max-w-3xl rounded-lg bg-white shadow-sm mt-4 p-4">
             <h2 class="text-lg font-bold text-gray-600">Crear nuevo cliente</h2>
             <hr class="mt-4" />
             <div class="mt-4">
-                <form @submit.prevent="form.post(route('cliente.store'), {
-                    onSuccess: ()=> form.reset()                  
-                })">
+                <form
+                    @submit.prevent="
+                        form.put(route('cliente.update', client.id), {
+                            onSuccess: () => form.reset(),
+                        })
+                    "
+                >
                     <div>
                         <label for="" class="my-2 text-gray-500 font-semibold"
                             >Nombre</label
@@ -84,7 +87,7 @@ const form = useForm({
 
                     <div class="mt-4 flex flex-row-reverse items-center">
                         <PrimaryButton class="ml-4"> Guardar </PrimaryButton>
-                        <a :href="route('cliente.index')" class="hover:underline">Cancelar</a>
+                        <span>cancelar</span>
                     </div>
                 </form>
             </div>
